@@ -5,10 +5,10 @@ This server is intended to interface with the Nexus 220 through the reader input
 relay should close and the gate should open. HIGH indicates that the relay should remain open and the gate should close.
 
 Hardware Connection is as follows:
-
-GPIO 5 ---------> READER 1 INPUTS
-GPIO 6 ---------> READER 2 INPUTS
-GPIO 13 --------> May function as an "Activity" light. Pin goes HIGH when the server is refreshing it's access lists. An LED may be connnected with a series resistor.
+ 
+GPIO 5 ---------> READER 1 INPUTS <br />
+GPIO 6 ---------> READER 2 INPUTS <br />
+GPIO 13 --------> May function as an "Activity" light. Pin goes HIGH when the server is refreshing it's access lists. An LED may be connnected with a series resistor. <br />
 Raspberry Pi GND -----------> READER 1 GND, READER 2 GND   
 
 Note: It does not matter which GND pins you connect to the READER INPUTS. It only matters that the GND pins on both READER INPUTS are connect to GND pins on the Raspberry Pi.
