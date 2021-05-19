@@ -24,7 +24,34 @@ I also reccommend adding an additional field so that images are not forwarded:
 
 webhook_image = no
 
-#Installation
+# Installation
 
 The only necessary files are the python dependencies and the service file. The service file is what allows the ParkPow gate server to run in the background. To set up
 the dependencies you should use the installation script: install.sh
+
+#Installation Instructions
+
+## FOR INSTALLATION FROM GIT:
+
+Execute the following commands:
+
+cd ~/ <br />
+git clone https://github.com/dmanla/ParkPow_GateServer.git <br />
+cd ParkPow_GateServer <br />
+sudo ./install.sh <br />
+sudo reboot <br />
+
+## FOR INSTALLATION FROM ZIP Directory:
+
+Unzip the folder to your users home directory.
+
+Execute the following commands:
+
+cd ParkPow_GateServer <br />
+sudo ./install.sh <br />
+sudo reboot <br />
+
+
+
+
+
