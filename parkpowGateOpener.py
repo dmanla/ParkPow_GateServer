@@ -9,8 +9,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
-gate1_AccessList = ['sgd6707b', 'sgd6707g']
-gate2_AccessList = ['sjf5117p', 'sjf5117g']
+gate1_AccessList = []
+gate2_AccessList = []
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -24,6 +24,7 @@ GPIO.output(13,True)
 time.sleep(1)
 GPIO.output(13,False)
 
+#---Regularly called to update plate access list-------#
 def updateAccessList():
     accessListLocation = os.path.join(sys.path[0], 'configDir/accessList.csv')
     GPIO.output(13, True)
@@ -37,7 +38,8 @@ def updateAccessList():
 
     time.sleep(2)
     GPIO.output(13, False)
-#---------------Get Configuration Data-----------------#
+##------------------------------------------------------------------#
+#------------------------Get Configuration Data---------------------#
 configLocation = os.path.join(sys.path[0], 'configDir/config.ini')
 configValues = {}
 with open (configLocation, "rt") as configFile:
@@ -48,12 +50,12 @@ with open (configLocation, "rt") as configFile:
 gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('api-token')
-#-------------------------------------------------------#
-
+#-------------------------------------------------------------------#
+#---Calls "updateAccessList", pollFrequency comes from config.ini---#
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=updateAccessList, trigger="interval", seconds=pollFrequency)
 scheduler.start()
-
+#-------------------------------------------------------------------#
 @app.route('/postJson', methods = ['POST'])
 def postJsonHandler():
     jsonData = request.form['json']
