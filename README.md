@@ -4,12 +4,13 @@ Flask Server designed to run on Raspberry Pi for receiving ParkPow webhooks and 
 This server is intended to interface with the Nexus 220 through the reader input terminals. It does this by setting the RTE pin to HIGH or LOW. LOW indicates that the 
 relay should close and the gate should open. HIGH indicates that the relay should remain open and the gate should close.
 
-Hardware Connection is as follows:
+## Hardware Setup:
  
-GPIO 5 ---------> READER 1 INPUTS <br />
-GPIO 6 ---------> READER 2 INPUTS <br />
+GPIO 5 ---------> READER 1 INPUT(RTE) <br />
+GPIO 6 ---------> READER 2 INPUT(RTE) <br />
 GPIO 13 --------> May function as an "Activity" light. Pin goes HIGH when the server is refreshing it's access lists. An LED may be connnected with a series resistor. <br />
 Raspberry Pi GND -----------> READER 1 GND, READER 2 GND   
+Also insert ethernet cable if planning to use a wire connection.
 
 Note: It does not matter which GND pins you connect to the READER INPUTS. It only matters that the GND pins on both READER INPUTS are connect to GND pins on the Raspberry Pi.
 
