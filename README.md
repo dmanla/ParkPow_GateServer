@@ -49,7 +49,9 @@ sudo reboot <br />
 
 ## FOR UPLOADING NEW CONFIGURATION FILES
 
-scp config.ini pi@<IP-ADDRESS>:/home/pi/ParkPow_GateServer/configDir
+scp config.ini pi@IP-ADDRESS:/home/pi/ParkPow_GateServer/configDir
 
-scp accessList.csv pi@<IP-ADDRESS>:/home/pi/ParkPow_GateServer/configDir
+scp accessList.csv pi@IP-ADDRESS:/home/pi/ParkPow_GateServer/configDir
+
+Note that IP-ADDRESS should be the IP Address of your Raspberry Pi.
 
