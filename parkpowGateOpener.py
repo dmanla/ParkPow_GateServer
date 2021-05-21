@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 import csv
+import requests
 import configparser
 import os, sys
 from flask import Flask
@@ -11,7 +12,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
-gate_AccessLists = [[],[]]
+gate_AccessLists = [['sgd6707b'],['sjf5117p']]
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -34,8 +35,8 @@ def updateAccessList():
         gate_AccessLists.clear()
         for accessRecord in accessListFile:
             access1, access2 = accessRecord.split(',')
-            gate1_AccessList.append(access1)
-            gate2_AccessList.append(access2.replace("\n", ""))
+            gate_AccessLists[0].append(access1)
+            gate_AccessLists[1].append(access2.replace("\n", ""))
 
     time.sleep(2)
     GPIO.output(13, False)
@@ -48,9 +49,18 @@ with open (configLocation, "rt") as configFile:
         key, value = configValue.split('= ')
         configValues[key] = value
 
+parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
+parkpowHeaders ={'Authorization Token': ''}
+
 gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
-apiToken = configValues.get('api-token')
+apiToken = configValues.get('pr-api-token')
+ppApiToken = configValues.get('pp-api-token')
+
+parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/?tags=Whitelist"
+parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
+parkpowHeaders['Authorization'] = parkpowToken
+
 #-------------------------------------------------------------------#
 #---Calls "updateAccessList", pollFrequency comes from config.ini---#
 scheduler = BackgroundScheduler()
@@ -61,18 +71,21 @@ scheduler.start()
 def postJsonHandler():
     jsonData = request.form['json']
     parsedJson = json.loads(jsonData)
-    plateNumber  = parsedJson['data']['results'][0]['plate']
-    print(plateNumber)
-    if plateNumber in gate1_AccessList:
-        print("{} routed to GATE 1".format(plateNumber))
+    plateNumber = parsedJson['data']['results'][0]['plate']
+
+    ppCurlResponse = requests.get(parkpowUrl, headers=parkpowHeaders)
+    jsonDataCurl = json.loads(ppCurlResponse.content)
+    plateList = [] 
+    for plates in jsonDataCurl['results']:
+        plateList.append(plates['license_plate'])
+
+    if plateNumber in plateList:
+        print("{} permitted through gate".format(plateNumber))
         GPIO.output(5,False)
         time.sleep(gateOpenPeriod)
         GPIO.output(5,True)
-    elif plateNumber in gate2_AccessList:
-        print("{} routed to GATE 2".format(plateNumber))
-        GPIO.output(6,False)
-        time.sleep(gateOpenPeriod)
-        GPIO.output(6,True)
+    else:
+        print("{} denied access".format(plateNumber))
     return 'JSON Posted'
 
 app.run(host='0.0.0.0', port= 8010)
