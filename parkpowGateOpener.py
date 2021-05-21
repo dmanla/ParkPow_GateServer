@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 import time
+import csv
+import configparser
 import os, sys
 from flask import Flask
 from flask import request
@@ -9,8 +11,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
-gate1_AccessList = []
-gate2_AccessList = []
+gate_AccessLists = [[],[]]
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -27,10 +28,10 @@ GPIO.output(13,False)
 #---Regularly called to update plate access list-------#
 def updateAccessList():
     accessListLocation = os.path.join(sys.path[0], 'configDir/accessList.csv')
-    GPIO.output(13, True)
+    GPIO.output(13, True)    
+    
     with open (accessListLocation, "r") as accessListFile:
-        gate1_AccessList.clear()
-        gate2_AccessList.clear()
+        gate_AccessLists.clear()
         for accessRecord in accessListFile:
             access1, access2 = accessRecord.split(',')
             gate1_AccessList.append(access1)
