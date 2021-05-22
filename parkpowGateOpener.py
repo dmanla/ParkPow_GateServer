@@ -49,15 +49,12 @@ with open (configLocation, "rt") as configFile:
         key, value = configValue.split('= ')
         configValues[key] = value
 
-parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
-parkpowHeaders ={'Authorization Token': ''}
-
 gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('pr-api-token')
 ppApiToken = configValues.get('pp-api-token')
 
-parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/?tags=Whitelist"
+parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/
 parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
 parkpowHeaders['Authorization'] = parkpowToken
 
