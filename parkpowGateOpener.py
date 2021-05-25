@@ -44,7 +44,7 @@ def updateAccessList():
         logger.error('Update Access List Failed: {}'.format(curlException))
         GPIO.output(13, False)
         return
-
+    logger.info("Access List Refreshed")
     jsonDataCurl = json.loads(ppCurlResponse.content)
     plateResults = jsonDataCurl["results"]
     
