@@ -1,4 +1,7 @@
-GATE-1,GATE-2
-sgd6707b,sjf5117p
-sgd6707c,sjf5117q
-sgd6707d,sjf5117r
+license_plate,payment_status,field1,field2,field3,field4,field5,field6,vehicle_tags
+cgf1237,0,,,,,,,['Good2']
+bgf1235,0,,,,,,,['Good1&Good2']
+agf1234,0,,,,,,,['Good1']
+sjf5117f,0,,,,,,,['Good1']
+sjf5117p,0,,,,,,,['Good1&Good2']
+sgd6707b,0,,,,,,,['Good1']

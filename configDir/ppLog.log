@@ -1,0 +1,10 @@
+2021-05-25 00:07:43,368:INFO:Parkpow Server Started
+2021-05-25 00:07:43,588:INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2021-05-25 00:07:43,590:INFO:Added job "updateAccessList" to job store "default"
+2021-05-25 00:07:43,590:INFO:Scheduler started
+2021-05-25 00:07:43,590:DEBUG:Looking for jobs to run
+2021-05-25 00:07:43,592:DEBUG:Next wakeup is due at 2021-05-25 00:08:03.586596-04:00 (in 19.994317 seconds)
+2021-05-25 00:07:43,607:INFO: * Running on http://0.0.0.0:8010/ (Press CTRL+C to quit)
+2021-05-25 00:07:47,806:INFO:Scheduler has been shut down
+2021-05-25 00:07:47,807:DEBUG:Looking for jobs to run
+2021-05-25 00:07:47,807:DEBUG:No jobs; waiting until a job is added
