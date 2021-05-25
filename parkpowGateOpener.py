@@ -38,7 +38,13 @@ print("Parkpow Server Started")
 def updateAccessList():
     GPIO.output(13, True)    
 
-    ppCurlResponse = requests.get(parkpowUrl, headers=parkpowHeaders)
+    try:
+        ppCurlResponse = requests.get(parkpowUrl, headers=parkpowHeaders)
+    except Exception as curlException:
+        logger.error('Update Access List Failed: {}'.format(curlException))
+        GPIO.output(13, False)
+        return
+
     jsonDataCurl = json.loads(ppCurlResponse.content)
     plateResults = jsonDataCurl["results"]
     
