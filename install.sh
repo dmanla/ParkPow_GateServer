@@ -6,7 +6,7 @@ pip3 install flask
 pip3 install apscheduler
 pip3 install json
 
-cp ./parkpowGateOpener.py /etc/
+cp -r ../Parkpow_GateServer /etc/
 cp ./parkpowServer.service /etc/systemd/system
 systemctl enable parkpowServer.service
 systemctl restart parkpowServer.service
