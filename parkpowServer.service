@@ -3,7 +3,7 @@ Description=Program to receive plate data and open gates
 After=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/pi/ParkPow_GateServer/parkpowGateOpener.py
+ExecStart=/usr/bin/python3 /etc/ParkPow_GateServer/parkpowGateOpener.py
 
 [Install]
 WantedBy=multi-user.target
