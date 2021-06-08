@@ -76,6 +76,19 @@ pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('pr-api-token')
 ppApiToken = configValues.get('pp-api-token')
 
+gate1_Cameras = configValues.get('gate1_CameraList').replace(" ", "")
+gate1_Cameras = gate1_Cameras.strip("\n \t").split(',')
+
+gate2_Cameras = configValues.get('gate2_CameraList').replace(" ", "")
+gate2_Cameras = gate2_Cameras.strip("\n \t").split(',')
+
+gate1_Tags = configValues.get('gate1_Tags').replace(" ", "").strip("\n \t").split(',')
+gate2_Tags = configValues.get('gate2_Tags').replace(" ", "").strip("\n \t").split(',')
+
+print(gate1_Cameras)
+print(gate2_Cameras)
+print(gate1_Tags)
+print(gate2_Tags)
 
 parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
 parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
@@ -99,14 +112,15 @@ def postJsonHandler():
 
     for plates in csvAsList:
         if plateNumber in plates:
-            print(plates)
-            if 'Good1' in plates[8] and (cameraId == 'camera-1'):
+            tagList = set(plates[8].strip("[]'").split('&'))
+            print(tagList)
+            if (set(gate1_Tags).intersection(tagList)) and (cameraId in gate1_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
                 print('GATE 1 ACCESS GRANTED')
                 GPIO.output(5,False)
                 time.sleep(gateOpenPeriod)
                 GPIO.output(5,True)
-            elif 'Good2' in plates[8] and (cameraId == 'camera-2'):
+            elif (set(gate2_Tags).intersection(tagList)) and (cameraId in gate2_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 2".format(plateNumber, cameraId))
                 print('GATE 2 ACCESS GRANTED')
                 GPIO.output(6,False)
