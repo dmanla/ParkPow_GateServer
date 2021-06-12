@@ -5,7 +5,7 @@ pip3 install coloredlog
 pip3 install flask
 pip3 install apscheduler
 
-cp -r ../Parkpow_GateServer /etc/
+cp -r ../ParkPow_GateServer /etc/
 cp ./parkpowServer.service /etc/systemd/system
 systemctl enable parkpowServer.service
 systemctl restart parkpowServer.service
