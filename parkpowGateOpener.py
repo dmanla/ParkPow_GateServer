@@ -24,6 +24,12 @@ GPIO.output(13,True)
 time.sleep(1)
 GPIO.output(13,False)
 
+parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
+paginatedUrl = "https://app.parkpow.com/api/v1/vehicles/?page={apiPageNumber}"
+parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
+parkpowHeaders = {}
+parkpowHeaders['Authorization'] = parkpowToken
+
 accessListCSV = os.path.join(sys.path[0], 'configDir/accessList.csv')
 configLocation = os.path.join(sys.path[0], 'configDir/config.ini')
 logLocation = os.path.join(sys.path[0], 'configDir/ppLog.log')
@@ -44,24 +50,22 @@ def updateAccessList():
         logger.error('Update Access List Failed: {}'.format(curlException))
         GPIO.output(13, False)
         return
-    logger.info("Access List Refreshed")
+    
+    logger.info("Access List Update Start")
     jsonDataCurl = json.loads(ppCurlResponse.content)
-    plateResults = jsonDataCurl["results"]
+    pageCount = jsonDataCurl["count"]
     
     #------------Import JSON data into CSV-----------#
-    accessList = open(accessListCSV, 'w')
-    accessListWriter = csv.writer(accessList)
-    counter = 0
-    for plate in plateResults:
-        if counter == 0:
-            header = plate.keys()
-            accessListWriter.writerow(header)
-            counter += 1
-        accessListWriter.writerow(plate.values())
+    accessList = open(accessListCSV, 'a+', newline='')
+    for i in range(int(pageCount)):
+        ppCurlResponse = requests.get(paginatedUrl.format(i))
+        plateList = jsonDataCurl["results"]
+        accessListWriter = csv.writer(accessList)
+        for plate in plateList:
+            accessListWriter.writerow(plate.values())
     accessList.close()
-    #-=----------------------------------------------#
-
-    time.sleep(2)
+    #------------------------------------------------#
+    time.sleep(1)
     GPIO.output(13, False)
 ##------------------------------------------------------------------#
 #------------------------Get Configuration Data---------------------#
@@ -90,11 +94,6 @@ print(gate2_Cameras)
 print(gate1_Tags)
 print(gate2_Tags)
 
-parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
-parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
-parkpowHeaders = {}
-parkpowHeaders['Authorization'] = parkpowToken
-
 #-------------------------------------------------------------------#
 #---Calls "updateAccessList", pollFrequency comes from config.ini---#
 scheduler = BackgroundScheduler()
@@ -103,17 +102,17 @@ scheduler.start()
 #-------------------------------------------------------------------#
 @app.route('/postJson', methods = ['POST'])
 def postJsonHandler():
+    
     jsonData = request.form['json']
     parsedJson = json.loads(jsonData)
-
     cameraId = parsedJson['hook']['id']
     plateNumber = parsedJson['data']['results'][0]['plate']
     csvAsList = list(csv.reader(open(accessListCSV)))
+    print(parsedJson)
 
     for plates in csvAsList:
         if plateNumber in plates:
             tagList = set(plates[8].strip("[]'").split('&'))
-            print(tagList)
             if (set(gate1_Tags).intersection(tagList)) and (cameraId in gate1_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
                 print('GATE 1 ACCESS GRANTED')
