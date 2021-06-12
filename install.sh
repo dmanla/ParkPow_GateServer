@@ -4,7 +4,6 @@ apt-get -y install python3-rpi.gpio
 pip3 install coloredlog
 pip3 install flask
 pip3 install apscheduler
-pip3 install json
 
 cp -r ../Parkpow_GateServer /etc/
 cp ./parkpowServer.service /etc/systemd/system
