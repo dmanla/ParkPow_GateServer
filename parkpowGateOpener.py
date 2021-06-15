@@ -69,11 +69,15 @@ def updateAccessList():
     pageCount = jsonDataCurl["count"]
     
     #------------Import JSON data into CSV-----------#
+    pageCounter = 0
+    accessList = open(accessListCSV, 'w')
+    accessList.close()
     accessList = open(accessListCSV, 'a+', newline='')
-    for i in range(int(pageCount)):
-        ppCurlResponse = requests.get(paginatedUrl.format(i))
+    while(sum(1 for line in accessList))
+        ppCurlResponse = requests.get(paginatedUrl.format(pageCounter))
         plateList = jsonDataCurl["results"]
         accessListWriter = csv.writer(accessList)
+        pageCounter++
         for plate in plateList:
             accessListWriter.writerow(plate.values())
     accessList.close()
