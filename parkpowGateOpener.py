@@ -66,21 +66,25 @@ def updateAccessList():
     
     logger.info("Access List Update Start")
     jsonDataCurl = json.loads(ppCurlResponse.content)
-    pageCount = jsonDataCurl["count"]
+    plateCount = jsonDataCurl["count"]
     
     #------------Import JSON data into CSV-----------#
     pageCounter = 0
     accessList = open(accessListCSV, 'w')
     accessList.close()
-    accessList = open(accessListCSV, 'a+', newline='')
-    while(sum(1 for line in accessList))
-        ppCurlResponse = requests.get(paginatedUrl.format(pageCounter))
+    accessList = open(accessListCSV, 'r')
+    while(sum(1 for line in accessList) < plateCount):
+        accessList.close()
+        accessList = open(accessListCSV, 'a+')
+        ppCurlResponse = requests.get(paginatedUrl.format(apiPageNumber=pageCounter))
         plateList = jsonDataCurl["results"]
         accessListWriter = csv.writer(accessList)
-        pageCounter++
+        pageCounter += 1
         for plate in plateList:
             accessListWriter.writerow(plate.values())
-    accessList.close()
+        accessList.close()
+        accessList = open(accessListCSV, 'r')
+    accessList.close()    
     #------------------------------------------------#
     time.sleep(1)
     GPIO.output(13, False)

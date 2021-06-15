@@ -1,19 +1,10 @@
-2021-06-07 20:41:26,833:INFO:Parkpow Server Started
-2021-06-07 20:41:27,057:INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2021-06-07 20:41:27,059:INFO:Added job "updateAccessList" to job store "default"
-2021-06-07 20:41:27,060:INFO:Scheduler started
-2021-06-07 20:41:27,060:DEBUG:Looking for jobs to run
-2021-06-07 20:41:27,062:DEBUG:Next wakeup is due at 2021-06-07 20:41:47.056433-04:00 (in 19.994355 seconds)
-2021-06-07 20:41:27,077:INFO: * Running on http://0.0.0.0:8010/ (Press CTRL+C to quit)
-2021-06-07 20:41:42,048:INFO:Plate Number sgd6707b admitted by camera-1 through gate 1
-2021-06-07 20:41:46,540:INFO:Plate Number sjf5117p admitted by camera-1 through gate 1
-2021-06-07 20:41:47,057:DEBUG:Looking for jobs to run
-2021-06-07 20:41:47,059:INFO:Running job "updateAccessList (trigger: interval[0:00:20], next run at: 2021-06-07 20:41:47 EDT)" (scheduled at 2021-06-07 20:41:47.056433-04:00)
-2021-06-07 20:41:47,060:DEBUG:Next wakeup is due at 2021-06-07 20:42:07.056433-04:00 (in 19.998778 seconds)
-2021-06-07 20:41:47,073:DEBUG:Starting new HTTPS connection (1): app.parkpow.com:443
-2021-06-07 20:41:47,320:DEBUG:https://app.parkpow.com:443 "GET /api/v1/vehicles/ HTTP/1.1" 200 None
-2021-06-07 20:41:47,325:INFO:Access List Refreshed
-2021-06-07 20:41:49,329:INFO:Job "updateAccessList (trigger: interval[0:00:20], next run at: 2021-06-07 20:42:07 EDT)" executed successfully
-2021-06-07 20:41:56,360:INFO:Scheduler has been shut down
-2021-06-07 20:41:56,361:DEBUG:Looking for jobs to run
-2021-06-07 20:41:56,361:DEBUG:No jobs; waiting until a job is added
+2021-06-15 00:24:24,012:INFO:Parkpow Server Started
+2021-06-15 00:24:24,221:INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2021-06-15 00:24:24,223:INFO:Added job "updateAccessList" to job store "default"
+2021-06-15 00:24:24,223:INFO:Scheduler started
+2021-06-15 00:24:24,224:DEBUG:Looking for jobs to run
+2021-06-15 00:24:24,225:DEBUG:Next wakeup is due at 2021-06-15 00:24:44.220058-04:00 (in 19.994307 seconds)
+2021-06-15 00:24:24,241:INFO: * Running on http://0.0.0.0:8010/ (Press CTRL+C to quit)
+2021-06-15 00:24:28,468:INFO:Scheduler has been shut down
+2021-06-15 00:24:28,469:DEBUG:Looking for jobs to run
+2021-06-15 00:24:28,470:DEBUG:No jobs; waiting until a job is added
