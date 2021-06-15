@@ -25,12 +25,6 @@ GPIO.output(13,True)
 time.sleep(1)
 GPIO.output(13,False)
 
-parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
-paginatedUrl = "https://app.parkpow.com/api/v1/vehicles/?page={apiPageNumber}"
-parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
-parkpowHeaders = {}
-parkpowHeaders['Authorization'] = parkpowToken
-
 accessListCSV = os.path.join(sys.path[0], 'configDir/accessList.csv')
 configLocation = os.path.join(sys.path[0], 'configDir/config.ini')
 logLocation = os.path.join(sys.path[0], 'configDir/ppLog.log')
@@ -52,6 +46,12 @@ gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('pr-api-token')
 ppApiToken = configValues.get('pp-api-token')
+
+parkpowUrl = "https://app.parkpow.com/api/v1/vehicles/"
+paginatedUrl = "https://app.parkpow.com/api/v1/vehicles/?page={apiPageNumber}"
+parkpowToken = 'Token {token}'.format(token = ppApiToken.replace('\n', ''))
+parkpowHeaders = {}
+parkpowHeaders['Authorization'] = parkpowToken
 #-------------------------------------------------------------------#
 #--------Regularly called to update plate access list---------------#
 def updateAccessList():
