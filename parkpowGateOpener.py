@@ -40,7 +40,19 @@ logger.setLevel(logging.DEBUG)
 logger.info("Parkpow Server Started")
 print("Parkpow Server Started")
 
-#---Regularly called to update plate access list-------#
+#------------------------Get Configuration Data---------------------#
+configValues = {}
+with open (configLocation, "rt") as configFile:
+    for configValue in configFile:
+        key, value = configValue.split('= ')
+        configValues[key] = value
+
+gateOpenPeriod = int(configValues.get('gate-open-period'))
+pollFrequency = int(configValues.get('poll-frequency'))
+apiToken = configValues.get('pr-api-token')
+ppApiToken = configValues.get('pp-api-token')
+#-------------------------------------------------------------------#
+#--------Regularly called to update plate access list---------------#
 def updateAccessList():
     GPIO.output(13, True)    
 
@@ -68,17 +80,6 @@ def updateAccessList():
     time.sleep(1)
     GPIO.output(13, False)
 ##------------------------------------------------------------------#
-#------------------------Get Configuration Data---------------------#
-configValues = {}
-with open (configLocation, "rt") as configFile:
-    for configValue in configFile:
-        key, value = configValue.split('= ')
-        configValues[key] = value
-
-gateOpenPeriod = int(configValues.get('gate-open-period'))
-pollFrequency = int(configValues.get('poll-frequency'))
-apiToken = configValues.get('pr-api-token')
-ppApiToken = configValues.get('pp-api-token')
 
 gate1_Cameras = configValues.get('gate1_CameraList').replace(" ", "")
 gate1_Cameras = gate1_Cameras.strip("\n \t").split(',')
