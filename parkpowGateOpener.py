@@ -72,7 +72,7 @@ def updateAccessList():
     accessList.close()
     nextPage = 0
     while(nextPage is not None): 
-        ppCurlResponse = requests.get(paginatedUrl.format(apiPageNumber=nextPage))
+        ppCurlResponse = requests.get(paginatedUrl.format(apiPageNumber=nextPage), headers=parkpowHeaders)
         jsonDataCurl = json.loads(ppCurlResponse.content)
         logger.info(jsonDataCurl)
         print(jsonDataCurl)
