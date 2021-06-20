@@ -74,6 +74,7 @@ def updateAccessList():
     while(nextPage is not None): 
         ppCurlResponse = requests.get(paginatedUrl.format(apiPageNumber=nextPage))
         jsonDataCurl = json.loads(ppCurlResponse.content)
+        print(jsonDataCurl)
         nextPage = jsonDataCurl["next"]
         plateList = jsonDataCurl["results"]
         accessList = open(accessListCSV, 'a')
