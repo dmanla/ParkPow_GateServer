@@ -42,7 +42,7 @@ with open (configLocation, "rt") as configFile:
         key, value = configValue.split('= ')
         configValues[key] = value
 
-updateFromParkpow = bool(configValues.get('pp-update-toggle'))
+updateFromParkpow = (configValues.get('pp-update-toggle'))
 gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('pr-api-token')
@@ -71,9 +71,10 @@ def updateAccessList():
     #------------Import JSON data into CSV-----------#
     accessList = open(accessListCSV, 'w')
     accessList.close()
-    nextPage = 0
+    nextPage = paginatedUrl.format(apiPageNumber=1)
     while(nextPage is not None): 
-        ppCurlResponse = requests.get(paginatedUrl.format(apiPageNumber=nextPage), headers=parkpowHeaders)
+        print(nextPage)
+        ppCurlResponse = requests.get(nextPage, headers=parkpowHeaders)
         jsonDataCurl = json.loads(ppCurlResponse.content)
         logger.info(jsonDataCurl)
         print(jsonDataCurl)
@@ -105,10 +106,13 @@ print(gate2_Tags)
 
 #-------------------------------------------------------------------#
 #---Calls "updateAccessList", pollFrequency comes from config.ini---#
-if updateFromParkpow:
+if updateFromParkpow in ['True\n', '1', 'Yes\n', 'YES\n', 'True\n']:
+    print("Auto updating via ParkPow API Enabled")
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=updateAccessList, trigger="interval", seconds=pollFrequency)
     scheduler.start()
+else:
+    print("Auto updating of ACL not enabled")
 #-------------------------------------------------------------------#
 @app.route('/postJson', methods = ['POST'])
 def postJsonHandler():
