@@ -42,6 +42,7 @@ with open (configLocation, "rt") as configFile:
         key, value = configValue.split('= ')
         configValues[key] = value
 
+updateFromParkpow = bool(configValues.get('pp-update-toggle'))
 gateOpenPeriod = int(configValues.get('gate-open-period'))
 pollFrequency = int(configValues.get('poll-frequency'))
 apiToken = configValues.get('pr-api-token')
@@ -104,9 +105,10 @@ print(gate2_Tags)
 
 #-------------------------------------------------------------------#
 #---Calls "updateAccessList", pollFrequency comes from config.ini---#
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=updateAccessList, trigger="interval", seconds=pollFrequency)
-scheduler.start()
+if updateFromParkpow:
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=updateAccessList, trigger="interval", seconds=pollFrequency)
+    scheduler.start()
 #-------------------------------------------------------------------#
 @app.route('/postJson', methods = ['POST'])
 def postJsonHandler():
