@@ -129,19 +129,19 @@ def postJsonHandler():
             tagList = set(plates[8].strip("[]'").split('&'))
             if (set(gate1_Tags).intersection(tagList)) and (cameraId in gate1_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
-                print('GATE 1 ACCESS GRANTED')
+                print("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
                 GPIO.output(5,False)
                 time.sleep(gateOpenPeriod)
                 GPIO.output(5,True)
             elif (set(gate2_Tags).intersection(tagList)) and (cameraId in gate2_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 2".format(plateNumber, cameraId))
-                print('GATE 2 ACCESS GRANTED')
+                print("Plate Number {} admitted by {} through gate 2".format(plateNumber, cameraId))
                 GPIO.output(6,False)
                 time.sleep(gateOpenPeriod)
                 GPIO.output(6,True)
             else:
                 logger.warning("Plate Number {} denied by {}".format(plateNumber, cameraId))
-                print('GATE ACCESS DENIED')
+                print("Plate Number {} denied by {}".format(plateNumber, cameraId))
 
     return 'JSON Posted'
 
