@@ -126,7 +126,8 @@ def postJsonHandler():
 
     for plates in csvAsList:
         if plateNumber in plates:
-            tagList = set(plates[8].strip("[]'").split(','))
+            tagList = set(plates[8].replace("'", "").replace(" ", "").strip("[]'").split(','))
+            print(tagList)
             if (set(gate1_Tags).intersection(tagList)) and (cameraId in gate1_Cameras):
                 logger.info("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
                 print("Plate Number {} admitted by {} through gate 1".format(plateNumber, cameraId))
